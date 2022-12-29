@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import '../../controllers/home.dart';
 import '../themes/colors.dart';
 
 class BannerWidget extends StatelessWidget {
@@ -13,18 +14,22 @@ class BannerWidget extends StatelessWidget {
         height: 140,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(10.0)
-        ),
-        child: PageView(
-          children: [
-            Center(child: Text("1"),),
-            Center(child: Text("2"),),
-            Center(child: Text("3"),),
-          ],
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(10.0)),
+        child: Obx(
+          () => PageView.builder(
+              itemCount: HomeController.to.bannerImages.length,
+              itemBuilder: (context, int index) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.network(
+                    HomeController.to.bannerImages[index],
+                    fit: BoxFit.cover,
+                  ),
+                );
+              }),
         ),
       ),
     );
-
   }
 }
