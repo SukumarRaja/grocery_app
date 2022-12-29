@@ -1,4 +1,4 @@
-package com.example.grocerry_app;
+package com.syssoft.grocery_app;
 
 import io.flutter.embedding.android.FlutterActivity;
 
