@@ -24,7 +24,8 @@ class CommonText extends StatelessWidget {
       style: TextStyle(
           fontSize: media.width * fontSize,
           fontWeight: fontWeight,
-          color: fontColor),
+          color: fontColor,
+          fontFamily: "Oswald"),
     );
   }
 }

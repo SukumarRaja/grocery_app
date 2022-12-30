@@ -42,6 +42,7 @@ class HomeMain extends StatelessWidget {
           selectedItemColor: AppColors.primary,
           showUnselectedLabels: false,
           showSelectedLabels: true,
+          selectedLabelStyle: TextStyle(fontFamily: "Oswald"),
           selectedIconTheme: const IconThemeData(color: AppColors.primary),
           unselectedIconTheme: const IconThemeData(color: AppColors.grey),
           onTap: (data) {

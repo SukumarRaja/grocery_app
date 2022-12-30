@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../controllers/home.dart';
 import '../../../themes/colors.dart';
 import '../../../widgets/banner.dart';
+import '../../../widgets/category_card.dart';
 import '../../../widgets/common_text.dart';
 
 class Home extends StatelessWidget {
@@ -50,6 +51,7 @@ class Home extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: BorderSide.none),
                         hintText: "Search For Products",
+                        hintStyle: TextStyle(fontFamily: "Oswald"),
                         prefixIcon: Icon(
                           Icons.search,
                           color: AppColors.grey.withAlpha(140),
@@ -57,7 +59,8 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              BannerWidget()
+              BannerWidget(),
+              CategoryCard()
             ],
           );
         });
