@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocerry_app/app/controllers/auth.dart';
 
 import '../../../../controllers/home.dart';
 import '../../../themes/colors.dart';
@@ -60,7 +61,10 @@ class Home extends StatelessWidget {
                 ),
               ),
               BannerWidget(),
-              CategoryCard()
+              CategoryCard(),
+              ElevatedButton(onPressed: () {
+                AuthController.to.logout();
+              }, child: Text("signout"))
             ],
           );
         });

@@ -8,10 +8,12 @@ class CommonText extends StatelessWidget {
       required this.text,
       this.fontSize = AppFontSize.sixteen,
       this.fontColor = AppColors.black,
-      this.fontWeight})
+      this.fontWeight,
+      this.letterSpacing})
       : super(key: key);
   final String text;
   final double fontSize;
+  final double? letterSpacing;
   final Color? fontColor;
   final FontWeight? fontWeight;
 
@@ -25,7 +27,8 @@ class CommonText extends StatelessWidget {
           fontSize: media.width * fontSize,
           fontWeight: fontWeight,
           color: fontColor,
-          fontFamily: "Oswald"),
+          fontFamily: "Oswald",
+          letterSpacing: letterSpacing),
     );
   }
 }
