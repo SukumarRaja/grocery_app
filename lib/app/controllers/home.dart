@@ -22,6 +22,7 @@ class HomeController extends GetxController {
       snapshot.docs.forEach((doc) {
         bannerImages.add(doc['image']);
         debugPrint("banner images $bannerImages");
+        update();
       });
     });
   }
