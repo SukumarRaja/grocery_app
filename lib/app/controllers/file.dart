@@ -19,25 +19,34 @@ class FileController extends GetxController {
   pickProfileImage({required ImageSource source}) async {
     XFile? file = await picker.pickImage(source: source);
     if (file != null) {
-      isPicked = true;
-      update();
       return await file.readAsBytes();
     } else {
-      isPicked = false;
       update();
       debugPrint("No image selected");
     }
   }
 
   selectGallery() async {
-    Uint8List image = await pickProfileImage(source: ImageSource.gallery);
-    pickImage = image;
-    update();
+    var pick = await pickProfileImage(source: ImageSource.gallery);
+    if (pick != null) {
+      if (pick.isNotEmpty) {
+        isPicked = true;
+        pickImage = pick;
+      }
+    } else {
+      debugPrint("Gallery image not selected");
+    }
   }
 
   selectCamera() async {
-    Uint8List image = await pickProfileImage(source: ImageSource.camera);
-    pickImage = image;
-    update();
+    var pick = await pickProfileImage(source: ImageSource.camera);
+    if (pick != null) {
+      if (pick.isNotEmpty) {
+        isPicked = true;
+        pickImage = pick;
+      }
+    } else {
+      debugPrint("Camera image not selected");
+    }
   }
 }

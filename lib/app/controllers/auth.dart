@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grocerry_app/app/controllers/file.dart';
 
 import '../ui/pages/buyers/home/home_main.dart';
 
@@ -9,6 +11,7 @@ class AuthController extends GetxController {
   static AuthController get to => Get.put(AuthController());
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
   final registerKey = GlobalKey<FormState>();
   final loginKey = GlobalKey<FormState>();
@@ -53,6 +56,14 @@ class AuthController extends GetxController {
     _logoutLoading.value = value;
   }
 
+  final _profileImage = "".obs;
+
+  get profileImage => _profileImage.value;
+
+  set profileImage(value) {
+    _profileImage.value = value;
+  }
+
   register() async {
     debugPrint("name ${name.text}");
     debugPrint("email ${email.text}");
@@ -62,12 +73,20 @@ class AuthController extends GetxController {
     try {
       UserCredential credential = await auth.createUserWithEmailAndPassword(
           email: email.text, password: password.text);
+      var image =
+          await uploadProfileImageToStorage(image: FileController.to.pickImage);
+      if (image != null) {
+        profileImage = image;
+      } else {
+        profileImage = "";
+      }
       if (credential.user!.uid.isNotEmpty) {
         await firestore.collection("buyers").doc(credential.user!.uid).set({
           "name": name.text,
           "email": email.text,
           "phone": phone.text,
           "password": password.text,
+          "image": profileImage,
           "buyerId": credential.user!.uid,
         }).whenComplete(() {
           registerLoading = false;
@@ -113,5 +132,14 @@ class AuthController extends GetxController {
       logoutLoading = false;
       debugPrint("Logout failed $e");
     }
+  }
+
+  uploadProfileImageToStorage({required image}) async {
+    Reference ref =
+        storage.ref().child("profilePics").child(auth.currentUser!.uid);
+    UploadTask task = ref.putData(image);
+    TaskSnapshot snapshot = await task;
+    var downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }
